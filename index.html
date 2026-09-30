@@ -6,6 +6,22 @@
 <title>NutriScan — Carb counting & glucose insights for diabetes</title>
 <meta name="description" content="Built for people with diabetes. Snap, speak, or type a meal for instant carbs and macros, sync your CGM, and see how foods affect your glucose. Logging only — never a dose.">
 <link rel="icon" type="image/png" href="icon.png">
+<link rel="canonical" href="https://getnutriscan.github.io/nutriscan-landing/">
+<meta name="apple-itunes-app" content="app-id=6775319090">
+<meta name="theme-color" content="#FAF7F2">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://getnutriscan.github.io/nutriscan-landing/">
+<meta property="og:title" content="NutriScan — Carb counting & glucose insights for diabetes">
+<meta property="og:description" content="Snap, speak, or type a meal for instant carbs and macros. Sync your CGM and see how foods affect your glucose. Built for diabetes — logging only, never a dose.">
+<meta property="og:image" content="https://getnutriscan.github.io/nutriscan-landing/icon.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NutriScan — Carb counting & glucose insights for diabetes">
+<meta name="twitter:description" content="Snap, speak, or type a meal for instant carbs and macros. Sync your CGM and see how foods affect your glucose.">
+<meta name="twitter:image" content="https://getnutriscan.github.io/nutriscan-landing/icon.png">
 
 <!-- LinkedIn Insight Tag -->
 <script type="text/javascript">
@@ -29,7 +45,9 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600;700;800&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
 
 <style>
   :root{
@@ -39,8 +57,8 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     --ink-soft:#5C5A52;
     --line:#DDD6C7;
     --lime:#5FE89A;
-    --lime-deep:#2FAE6B;
-    --rust:#C9622E;
+    --lime-deep:#1B8A4E;
+    --rust:#E07038;
     --rust-soft:#F2DCCB;
   }
 
@@ -258,7 +276,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   .readout-label{
     font-family:'JetBrains Mono',monospace;
     font-size:12px;
-    color:rgba(250,247,242,0.5);
+    color:rgba(250,247,242,0.65);
     letter-spacing:0.04em;
     text-transform:uppercase;
   }
@@ -393,7 +411,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   }
   .pro-card p{
     font-size:13.5px;
-    color:rgba(250,247,242,0.62);
+    color:rgba(250,247,242,0.75);
     line-height:1.5;
   }
   .pro-pricing{
@@ -410,7 +428,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     font-family:'JetBrains Mono',monospace;
   }
   .price-pill .amt{font-size:20px;font-weight:700;}
-  .price-pill .per{font-size:12px;color:rgba(250,247,242,0.55);}
+  .price-pill .per{font-size:12px;color:rgba(250,247,242,0.7);}
   .price-pill.best{border-color:var(--lime);background:rgba(159,232,112,0.06);}
   .price-pill.best .amt{color:var(--lime);}
   .save-tag{
@@ -482,6 +500,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     flex-wrap:wrap;
     gap:12px;
   }
+  footer nav{display:flex;align-items:center;gap:4px;}
   footer a{text-decoration:none;}
   footer a:hover{color:var(--ink);}
 
@@ -499,16 +518,57 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     .log-item{border-right:none;border-bottom:1px solid var(--line);}
   }
 
+  .skip-link{
+    position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;
+    font-size:14px;padding:8px 16px;background:var(--ink);color:var(--paper);z-index:100;
+    text-decoration:none;border-radius:0 0 4px 0;
+  }
+  .skip-link:focus{position:fixed;left:0;top:0;width:auto;height:auto;overflow:visible;}
+
   @media (prefers-reduced-motion:reduce){
     .scan-line,.corner{animation:none !important;opacity:1;}
   }
 </style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "NutriScan",
+  "operatingSystem": "iOS",
+  "applicationCategory": "HealthApplication",
+  "description": "Carb counting and glucose insights for people with diabetes. Snap, speak, or type a meal for instant macros, sync your CGM, and track how foods affect your glucose.",
+  "url": "https://getnutriscan.github.io/nutriscan-landing/",
+  "offers": [
+    {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "description": "Free tier with carb tracking, CGM sync, and food security features"
+    },
+    {
+      "@type": "Offer",
+      "price": "4.99",
+      "priceCurrency": "USD",
+      "description": "Pro monthly subscription"
+    },
+    {
+      "@type": "Offer",
+      "price": "29.00",
+      "priceCurrency": "USD",
+      "description": "Pro annual subscription"
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
-<nav class="nav">
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<nav class="nav" aria-label="Main">
   <div class="wrap">
-    <div class="logo"><img src="icon.png" alt="NutriScan icon">NutriScan</div>
+    <div class="logo"><img src="icon.png" alt="NutriScan icon" width="26" height="26">NutriScan</div>
     <a class="nav-cta" href="https://apps.apple.com/app/id6775319090" id="nav-cta">Get the app</a>
   </div>
 </nav>
@@ -521,17 +581,17 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
       <p class="hero-sub">NutriScan is built for people living with diabetes. Snap a photo, say what you ate, or tap a preset — get instant carbs and macros, sync your CGM, and learn how foods actually affect <em>you</em>. Logging only, never a dose.</p>
       <div class="hero-ctas">
         <a class="btn-primary" href="https://apps.apple.com/app/id6775319090" id="hero-cta">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.08l-.01.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.08l-.01.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
           Download on the App Store
         </a>
         <span class="free-note">Free to start · No card required</span>
       </div>
     </div>
 
-    <div class="scan-card">
+    <div class="scan-card" role="img" aria-label="NutriScan scan demo showing carb, calorie, protein, and fat readout">
       <div class="scan-photo">
-        <img src="icon.png" alt="NutriScan app icon" style="width:62%;border-radius:14px;box-shadow:0 12px 30px -10px rgba(0,0,0,0.5);">
-        <div class="reticle">
+        <img src="icon.png" alt="NutriScan app scanning a meal to estimate carbs and macros" width="512" height="512" style="width:62%;height:auto;border-radius:14px;box-shadow:0 12px 30px -10px rgba(0,0,0,0.5);">
+        <div class="reticle" aria-hidden="true">
           <span class="corner tl"></span>
           <span class="corner tr"></span>
           <span class="corner bl"></span>
@@ -561,6 +621,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
   </div>
 </header>
 
+<main id="main-content">
 <div class="log-strip">
   <div class="wrap">
     <div class="log-item"><span class="n">CAMERA</span><span class="d">Point at any meal, get carbs + macros</span></div>
@@ -669,7 +730,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
         <h3>Food Security &amp; Care Center</h3>
         <p>Built into the free app: find food banks, SNAP retailers, WIC offices, free meals, and farmers markets near you — matched to your goals, with steady, diabetes-friendly staples in mind.</p>
       </div>
-      <div class="care-icon">FOOD BANKS<br>SNAP RETAILERS<br>WIC OFFICES<br>FREE MEALS</div>
+      <div class="care-icon" aria-hidden="true">FOOD BANKS<br>SNAP RETAILERS<br>WIC OFFICES<br>FREE MEALS</div>
     </div>
   </div>
 </section>
@@ -680,18 +741,23 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     <p class="hero-sub">Guest mode lets you try NutriScan before creating an account. No commitment, no card.</p>
     <div class="hero-ctas">
       <a class="btn-primary" href="https://apps.apple.com/app/id6775319090" id="final-cta">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.08l-.01.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.08l-.01.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
         Download on the App Store
       </a>
     </div>
     <p class="disclaimer">NutriScan is a logging and education tool, not a medical device. Carb, nutrition, and glucose values are estimates and must not be used for insulin dosing or other medical decisions. NutriScan never recommends insulin doses — always confirm with your healthcare professional or care team. Pro subscriptions renew automatically unless cancelled at least 24 hours before the period ends; manage anytime in your Apple ID settings.</p>
   </div>
 </section>
+</main>
 
 <footer>
   <div class="wrap">
     <span>© 2026 NutriScan</span>
-    <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank" rel="noopener">Terms of Use</a>
+    <nav aria-label="Footer">
+      <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank" rel="noopener">Terms of Use</a>
+      <span aria-hidden="true"> · </span>
+      <a href="mailto:support@getnutriscan.com">Support</a>
+    </nav>
   </div>
 </footer>
 
