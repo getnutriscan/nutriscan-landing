@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Validate HTML
+        uses: nicholascc/html-validate-action@v1
+        with:
+          files: index.html
+
+      - name: Validate JSON-LD
+        run: |
+          # Extract JSON-LD from index.html and validate it is parseable JSON
+          node -e "
+            const fs = require('fs');
+            const html = fs.readFileSync('index.html', 'utf8');
+            const match = html.match(/<script type=\"application\/ld\+json\">([\s\S]*?)<\/script>/);
+            if (!match) { console.error('No JSON-LD found'); process.exit(1); }
+            try {
+              const data = JSON.parse(match[1]);
+              console.log('JSON-LD valid:', data['@type'], data.name);
+              // Verify required fields
+              if (!data.url) { console.error('Missing url field'); process.exit(1); }
+              if (!data.offers || !data.offers.length) { console.error('Missing offers'); process.exit(1); }
+              console.log('URL:', data.url);
+              console.log('Offers:', data.offers.length);
+            } catch (e) {
+              console.error('Invalid JSON-LD:', e.message);
+              process.exit(1);
+            }
+          "
+
+      - name: Check asset URLs
+        run: |
+          # Verify og:image and twitter:image URLs are reachable
+          urls=$(grep -oP 'content="(https://[^"]+\.(?:png|jpg|svg))"' index.html | grep -oP 'https://[^"]+')
+          fail=0
+          for url in $urls; do
+            status=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$url" || echo "000")
+            echo "$url -> $status"
+            if [ "$status" != "200" ]; then
+              echo "::error::Asset URL returns $status: $url"
+              fail=1
+            fi
+          done
+          if [ "$fail" -eq 1 ]; then exit 1; fi
