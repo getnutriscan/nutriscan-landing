@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+
+      - name: Validate HTML
+        run: npx --yes html-validate@10.5.0 index.html
+
+      - name: Validate JSON-LD
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const html = fs.readFileSync('index.html', 'utf8');
+          const match = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
+          if (!match) throw new Error('No JSON-LD block found');
+
+          const data = JSON.parse(match[1]);
+          if (data['@type'] !== 'SoftwareApplication') throw new Error('Unexpected JSON-LD type');
+          if (data.url !== 'https://getnutriscan.com') throw new Error(`Unexpected canonical app URL: ${data.url}`);
+          if (!Array.isArray(data.offers) || data.offers.length < 2) throw new Error('Expected free and Pro offers');
+          if (!data.offers.some((offer) => offer.price === '0')) throw new Error('Free offer is missing');
+          if (!data.offers.some((offer) => Number(offer.price) > 0)) throw new Error('Paid offer is missing');
+
+          console.log(`Valid ${data['@type']} JSON-LD with ${data.offers.length} offers`);
+          NODE
+
+      - name: Check social image URLs
+        run: |
+          node <<'NODE'
+          (async () => {
+          const fs = require('node:fs');
+          const html = fs.readFileSync('index.html', 'utf8');
+          const tags = [...html.matchAll(/<meta\b[^>]*>/gi)].map(([tag]) => tag);
+          const getAttribute = (tag, name) =>
+            tag.match(new RegExp(`\\b${name}\\s*=\\s*["']([^"']*)["']`, 'i'))?.[1];
+          const imageUrls = tags
+            .filter((tag) => ['og:image', 'twitter:image'].includes(getAttribute(tag, 'property') || getAttribute(tag, 'name')))
+            .map((tag) => getAttribute(tag, 'content'));
+
+          if (imageUrls.length !== 2 || imageUrls.some((url) => !url)) {
+            throw new Error(`Expected both social image URLs; found ${imageUrls.length}`);
+          }
+
+          for (const imageUrl of imageUrls) {
+            const response = await fetch(imageUrl, { signal: AbortSignal.timeout(15000) });
+            const contentType = response.headers.get('content-type') || '';
+            if (!response.ok || !contentType.startsWith('image/')) {
+              throw new Error(`${imageUrl} returned ${response.status} (${contentType})`);
+            }
+            console.log(`${imageUrl} -> ${response.status} ${contentType}`);
+          }
+          })().catch((error) => {
+            console.error(error);
+            process.exitCode = 1;
+          });
+          NODE
