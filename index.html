@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NutriScan — Carb counting & glucose insights for diabetes</title>
+<title>NutriScan — Carb counting &amp; glucose insights for diabetes</title>
 <meta name="description" content="Built for people with diabetes. Snap, speak, or type a meal for instant carbs and macros. Sync Apple Health, track glucose with Pro CGM support, and see how foods affect you. Logging only — never a dose.">
 <link rel="icon" type="image/png" href="icon.png">
 <link rel="canonical" href="https://getnutriscan.com">
@@ -13,23 +13,23 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://getnutriscan.com">
-<meta property="og:title" content="NutriScan — Carb counting & glucose insights for diabetes">
+<meta property="og:title" content="NutriScan — Carb counting &amp; glucose insights for diabetes">
 <meta property="og:description" content="Snap, speak, or type a meal for instant carbs and macros. Sync Apple Health, track glucose with Pro CGM support. Built for diabetes — logging only, never a dose.">
 <meta property="og:image" content="https://getnutriscan.github.io/nutriscan-landing/icon.png">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="NutriScan — Carb counting & glucose insights for diabetes">
+<meta name="twitter:title" content="NutriScan — Carb counting &amp; glucose insights for diabetes">
 <meta name="twitter:description" content="Snap, speak, or type a meal for instant carbs and macros. Sync Apple Health, track glucose with Pro CGM support.">
 <meta name="twitter:image" content="https://getnutriscan.github.io/nutriscan-landing/icon.png">
 
 <!-- LinkedIn Insight Tag -->
-<script type="text/javascript">
+<script>
 _linkedin_partner_id = "9524004";
 window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
 window._linkedin_data_partner_ids.push(_linkedin_partner_id);
 </script>
-<script type="text/javascript">
+<script>
 (function(l) {
 if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
 window.lintrk.q=[]}
@@ -39,10 +39,6 @@ b.type = "text/javascript";b.async = true;
 b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
 s.parentNode.insertBefore(b, s);})(window.lintrk);
 </script>
-<noscript>
-<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=9524004&fmt=gif" />
-</noscript>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600;700;800&display=swap">
@@ -428,6 +424,8 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     font-family:'JetBrains Mono',monospace;
   }
   .price-pill .amt{font-size:20px;font-weight:700;}
+  .price-period{font-size:12px;font-weight:400;}
+  .scan-app-icon{width:62%;height:auto;border-radius:14px;box-shadow:0 12px 30px -10px rgba(0,0,0,0.5);}
   .price-pill .per{font-size:12px;color:rgba(250,247,242,0.7);}
   .price-pill.best{border-color:var(--lime);background:rgba(159,232,112,0.06);}
   .price-pill.best .amt{color:var(--lime);}
@@ -564,6 +562,10 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 </head>
 <body>
 
+<noscript>
+  <img hidden height="1" width="1" alt="" src="https://px.ads.linkedin.com/collect/?pid=9524004&amp;fmt=gif">
+</noscript>
+
 <a class="skip-link" href="#main-content">Skip to content</a>
 
 <nav class="nav" aria-label="Main">
@@ -590,7 +592,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 
     <div class="scan-card" role="img" aria-label="NutriScan scan demo showing carb, calorie, protein, and fat readout">
       <div class="scan-photo">
-        <img src="icon.png" alt="NutriScan app scanning a meal to estimate carbs and macros" width="512" height="512" style="width:62%;height:auto;border-radius:14px;box-shadow:0 12px 30px -10px rgba(0,0,0,0.5);">
+        <img class="scan-app-icon" src="icon.png" alt="NutriScan app scanning a meal to estimate carbs and macros" width="512" height="512">
         <div class="reticle" aria-hidden="true">
           <span class="corner tl"></span>
           <span class="corner tr"></span>
@@ -712,11 +714,11 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
     </div>
     <div class="pro-pricing">
       <div class="price-pill">
-        <div class="amt">$4.99<span style="font-size:12px;font-weight:400;"> /mo</span></div>
+        <div class="amt">$4.99<span class="price-period"> /mo</span></div>
         <div class="per">Monthly</div>
       </div>
       <div class="price-pill best">
-        <div class="amt">$29<span style="font-size:12px;font-weight:400;"> /yr</span><span class="save-tag">SAVE 50%+</span></div>
+        <div class="amt">$29<span class="price-period"> /yr</span><span class="save-tag">SAVE 50%+</span></div>
         <div class="per">Annual — best value</div>
       </div>
     </div>
