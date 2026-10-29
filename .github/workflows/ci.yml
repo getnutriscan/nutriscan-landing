@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+
+      - name: Validate redirect HTML
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+
+          const html = readFileSync('index.html', 'utf8');
+          const required = [
+            ['HTML5 doctype', /<!doctype html>/i],
+            ['redirect target', /<meta\s+http-equiv="refresh"\s+content="0;\s*url=https:\/\/getnutriscan\.com\/">/i],
+            ['noindex directive', /<meta\s+name="robots"\s+content="noindex, follow">/i],
+            ['canonical URL', /<link\s+rel="canonical"\s+href="https:\/\/getnutriscan\.com\/">/i],
+            ['visible fallback link', /<a\s+href="https:\/\/getnutriscan\.com\/">current NutriScan website<\/a>/i],
+            ['closed HTML document', /<\/body>\s*<\/html>\s*$/i],
+          ];
+          const missing = required.filter(([, pattern]) => !pattern.test(html)).map(([label]) => label);
+          if (missing.length) throw new Error(`Redirect HTML is missing: ${missing.join(', ')}`);
+          console.log('Redirect HTML has its canonical target, noindex directive, fallback link, and document structure.');
+          NODE
+
+      - name: Validate pull request template
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+
+          const template = readFileSync('.github/PULL_REQUEST_TEMPLATE.md', 'utf8');
+          const requiredSections = ['## What & why', '## How it was tested', '## Checklist'];
+          const missing = requiredSections.filter((section) => !template.includes(section));
+          if (missing.length) throw new Error(`Missing required template sections: ${missing.join(', ')}`);
+          if (!template.includes('No secrets, user data, or `.env` contents')) {
+            throw new Error('Data-safety checklist item is missing.');
+          }
+          console.log('Pull request template contains the required sections and data-safety checklist.');
+          NODE
